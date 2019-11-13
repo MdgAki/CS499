@@ -5,6 +5,8 @@
 
 #ifndef GRID_H
 #define GRID_H
+
+#include <iostream>
 #include "environment_object.h"
 
 struct grid_cell
@@ -20,12 +22,15 @@ class grid
 		int width;
 		int height;
 		grid_cell* cells;
+	public:
 		grid(int, int);
 		~grid();
 	public:
-		environment_object* get_cell_contents(int, int);
-		void set_cell_contents(int, int, environment_object*);
-		static grid& get_instance(int, int);
+		environment_object* get_cell_contents(point);
+		void set_cell_contents(point, environment_object*);
+		void print_grid();
+		void print_cols();
+		void print_rows();
 };
 
 #endif
