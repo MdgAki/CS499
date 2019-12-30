@@ -1,7 +1,7 @@
 /*
 Name: boulder.h
-Purpose: Header file for all of the boulder information
-Last edit: 09-29-19
+Purpose: Header file for all of the boulder information. Provides ways to "boulder".
+Last edit: 12-3-19
 Last editor: MG
 */
 
@@ -23,6 +23,15 @@ class boulder : public environment_object
         ~boulder();
         std::string get_type();
         int print_self();
+};
+
+class boulder_piece : public environment_object
+{
+    private:
+    public:
+        boulder_piece(point);
+        ~boulder_piece();
+        std::string get_type();
 };
 
 #endif

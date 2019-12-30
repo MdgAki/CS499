@@ -1,6 +1,6 @@
 /*Name: grid.cpp
 Purpose: Holds functions for the grid, including getting & setting cells contents
-Last edit: 10-01-19
+Last edit: 12-3-19
 Last editor: AW*/
 
 #include "grid.h"
@@ -27,7 +27,6 @@ grid::~grid()
     delete [] this->cells;
 }
 
-
 /*Name: get_cell_contents
 Purpose: Get pointer to the resident of some cell at X and Y location
 Parameters: 
@@ -38,7 +37,15 @@ Parameters:
 Returns: Pointer to resident of cell*/
 environment_object* grid::get_cell_contents(point location)
 {
-    grid_cell* cell = &(this->cells[location.x_loc*this->height+location.y_loc]);
+    if(!check_bounds(location))
+    {
+        return nullptr;
+    }
+    grid_cell* cell = &(cells[(int)(location.y_loc) * width + (int)(location.x_loc)]);
+    if(cell->environ_obj != nullptr && cell->environ_obj->is_garbage())
+    {
+        return nullptr;
+    }
     return cell->environ_obj;
 }
 
@@ -54,7 +61,11 @@ Parameters:
 Returns: NA*/
 void grid::set_cell_contents(point location, environment_object* environ_obj)
 {
-    grid_cell* cell = &(this->cells[location.x_loc*this->height+location.y_loc]);
+    if(!check_bounds(location))
+    {
+        return;
+    }
+    grid_cell* cell = &(cells[(int)(location.y_loc) * width + (int)(location.x_loc)]);
     cell->environ_obj = environ_obj;
 }
 
@@ -123,4 +134,27 @@ void grid::print_rows()
         } 
         std::cout << std::endl;
     }      
+}
+
+int grid::get_height()
+{
+    return this->height;
+}
+
+int grid::get_width()
+{
+    return this->width;
+}
+
+bool grid::check_bounds(point location)
+{
+    if(location.x_loc >= width || location.y_loc >= height)
+    {
+        return false;
+    }
+    if(location.x_loc < 0 || location.y_loc < 0)
+    {
+        return false;
+    }
+    return true;
 }

@@ -1,7 +1,9 @@
-/*******************************************************************
-*   grid.h
-*   Date: 09/04/19
-*******************************************************************/
+/*
+Name: grid.h
+Purpose: Header file for the grid. 
+Last edit: 12-3-19
+Last editor: MG
+*/
 
 #ifndef GRID_H
 #define GRID_H
@@ -31,6 +33,9 @@ class grid
 		void print_grid();
 		void print_cols();
 		void print_rows();
+		int get_height();
+		int get_width();
+		bool check_bounds(point);
 };
 
 #endif

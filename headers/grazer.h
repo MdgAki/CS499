@@ -1,7 +1,7 @@
 /*
 Name: grazer.h
-Purpose: Header file for grazers.
-Last edit: 11-7-2019
+Purpose: Header file for grazers. Has functions for the grazer's behaviors. 
+Last edit: 12-2-2019
 Last editor: BP
 */
 
@@ -9,33 +9,44 @@ Last editor: BP
 #define GRAZER_H
 
 #include <string>
-#include "environment_object.h"
 #include "mammal.h"
-#include "sim_message.h"
 
 class grazer : public mammal
 {
     private:
         int energy_input;
+        int move_count;
         time_container current_time;
-        time_container eat_timer;
-        time_container gain_energy_timer;
-        time_container movement_timer;
-        int maintain_time;
-        bool danger;
-        bool food_available;
+        time_container eat_time;
+        time_container gain_energy_time;
+        time_container movement_time;
+        time_container danger_time;
+        bool retained_movement_time;
+        bool retained_gain_energy_time;
+        bool retained_eat_time;
+        bool retained_danger_time;
+        int init_speed;
+        int curr_speed;
+        bool slowed;
+        bool food_in_sight;
+        bool danger_in_sight;
+        float banked_cells_to_eat;
+
+        const int eat_reach = 5;
+        const int plant_sight_dist = 150;
+        const int pred_sight_dist = 25;
+
+        bool eat(point);
 
     public:
-        grazer(point, int, int);
+        grazer(point, int, int, int, int, double, double);
         ~grazer();
-        std::string  get_type() override;
+        string  get_type() override;
         int print_self();
-        void set_energy(int);
         void act() override;
-        void eat();
-        void reset_eat_timer();
-        void reset_movement_timer();
-        void set_maintain_time(int);
+
+        bool found_food();
+        bool found_danger();
         
 };
 #endif
